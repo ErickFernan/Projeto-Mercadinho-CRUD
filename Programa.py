@@ -1,4 +1,6 @@
 from lib.interface import *
 from lib.Arquivo import *
 
-conexao()
+conn = conexao()
+
+escolhe_tabela(conn)

@@ -11,4 +11,10 @@ def conexao():
 
         if conn:
             print('Conexão feita com sucesso!')
+            return conn
             break
+
+
+def escolhe_tabela(conn):
+    mostra_tabelas(conn)
+    print('Escolha a tabela que deseja editar: ')
