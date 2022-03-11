@@ -3,4 +3,8 @@ from lib.Arquivo import *
 
 conn = conexao()
 
-escolhe_tabela(conn)
+nome = escolhe_tabela(conn)
+
+operacao = escolhe_acao()
+
+
