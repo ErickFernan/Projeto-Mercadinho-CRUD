@@ -1,3 +1,4 @@
+from lib.interface import *
 import mysql.connector  # Comando para fazer a ligação: pip3 install mysql-connector-python
 import re
 
@@ -49,6 +50,18 @@ def executa_acao(conn, nome, operacao):
         listar(conn, nome)
 
 
+def pega_titulo_tabela(conn, nome):
+    """"""
+    nome_tabelas = []
+    cursor = conn.cursor()
+    cursor.execute(f'DESC {nome}')
+    tabelas_titulo = cursor.fetchall()
+    for titulo in tabelas_titulo:
+        nome_tabelas.append(titulo[0])
+
+    return nome_tabelas
+
+
 def listar(conn, nome):
     """"""
     cursor = conn.cursor()  # Necessário para acessar o banco de dados
@@ -59,9 +72,11 @@ def listar(conn, nome):
     if len(itens) > 0:
         print('Listando produtos...')
         print('--------------------')
+        titulo_tabela = pega_titulo_tabela(conn, nome)
+        print(titulo_tabela)
         for item in itens:
             print(item)
-            print('--------------------')
+        print('--------------------')
     else:
         print('Não existem produtos cadastrados.')
 

@@ -8,4 +8,3 @@ nome = mostra_tabelas(conn)
 operacao = escolhe_acao()
 
 executa_acao(conn, nome, operacao)
-
