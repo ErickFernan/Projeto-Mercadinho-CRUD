@@ -24,33 +24,29 @@ def desconectar(conn):
 
 def mostra_tabelas(conn):
     """"""
+    nome_tabelas = []
     cursor = conn.cursor()
     cursor.execute('SHOW TABLES')
     tabelas = cursor.fetchall()
 
     if len(tabelas) > 0:
-        print('Listando tabelas:-----')
+        print('Listando tabelas:')
         print('----------------------')
         print('Nome da tabela | Opção')
         for n, tabela in enumerate(tabelas):
             tabela = str(tabela)
             new_string = re.sub(r"[^a-zA-Z0-9]", "", tabela)
+            nome_tabelas.append(new_string)
             print(f'{new_string:<14} | {n:^5}')
         print('')
+        opc = int(input('Escolha a tabela que deseja editar: '))
+        return str(nome_tabelas[opc])
 
-        # LEMBRAR DE FORMATAR PARA FICAR BONITO
 
-
-def escolhe_acao_crud():
+def executa_acao(conn, nome, operacao):
     """"""
-    acao = input("""
-Escolha o que deseja fazer:
-[1] Ler dados da tabela
-[2] Inserir dados na tabela
-[3] Modificar dados da tabela
-[4] Deletar a tabela
-""")
-    return acao
+    if operacao == '1':
+        listar(conn, nome)
 
 
 def listar(conn, nome):
@@ -63,7 +59,6 @@ def listar(conn, nome):
     if len(itens) > 0:
         print('Listando produtos...')
         print('--------------------')
-        print(itens)
         for item in itens:
             print(item)
             print('--------------------')

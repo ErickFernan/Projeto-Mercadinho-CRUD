@@ -2,6 +2,7 @@ from lib.Arquivo import *
 
 
 def conexao():
+    """"""
     while True:
         login = input('Digite seu nome de usuário: ')
         senha = input('Digite sua Senha: ')
@@ -13,15 +14,15 @@ def conexao():
             return conn
 
 
-def escolhe_tabela(conn):
-    mostra_tabelas(conn)
-    nome = input('Escolha a tabela que deseja editar: ')
-    return nome
-
-
 def escolhe_acao():
+    """"""
     while True:
-        acao = escolhe_acao_crud()
+        acao = input("""
+[1] Ler dados da tabela
+[2] Inserir dados na tabela
+[3] Modificar dados da tabela
+[4] Deletar a tabela
+Escolha o que deseja fazer: """)
         ans = input(f'Voce escolheu a ação {acao}, está certo disso? [S/N]\n').upper().strip()[0]
         if ans in ['S']:
-            return ans
+            return acao
