@@ -71,12 +71,16 @@ def listar(conn, nome):
     # Verificando se a lista está vazia
     if len(itens) > 0:
         print('Listando produtos...')
-        print('--------------------')
         titulo_tabela = pega_titulo_tabela(conn, nome)
-        print(titulo_tabela)
+        print('-' * 26 * len(titulo_tabela))
+        for palavra in titulo_tabela:
+            print(f'{ palavra:^24} |', end='')
+        print('')
         for item in itens:
-            print(item)
-        print('--------------------')
+            for valor in item:
+                print(f'{valor:^24} |', end='')
+            print('')
+        print('-' * 26 * len(titulo_tabela))
     else:
         print('Não existem produtos cadastrados.')
 
