@@ -48,8 +48,10 @@ def executa_acao(conn, nome, operacao):
     """"""
     if operacao == '1':
         listar(conn, nome)
-    if operacao == '2':
+    elif operacao == '2':
         inserir(conn, nome)
+    elif operacao == '3':
+        atualizar(conn, nome)
 
 
 def pega_titulo_tabela(conn, nome):
@@ -93,41 +95,51 @@ def inserir(conn, nome):
     cursor = conn.cursor()
     titulo_tabela = pega_titulo_tabela(conn, nome)
 
-    for c in range(len(titulo_tabela)-1):  # Menos 1 pois o id é auto incremento
-        valores_tab.append(input(f'Informe o {titulo_tabela[c+1]}: '))
+    try:
+        for c in range(len(titulo_tabela)-1):  # Menos 1 pois o id é auto incremento
+            valores_tab.append(input(f'Informe o {titulo_tabela[c+1]}: '))
 
-    cursor.execute(f"INSERT INTO {nome} ({re.sub(r'[^a-zA-Z0-9,]', '', str(titulo_tabela[1:]))}) "
-                   f"VALUES ({(str(valores_tab)).replace(']','').replace('[','')})")
+        cursor.execute(f"INSERT INTO {nome} ({re.sub(r'[^a-zA-Z0-9,]', '', str(titulo_tabela[1:]))}) "
+                       f"VALUES ({(str(valores_tab)).replace(']','').replace('[','')})")
 
-    conn.commit()
+        conn.commit()
 
-    if cursor.rowcount >= 1:  # rowcount -> contagem de linhas
-        print(f'Os dados foram inseridos com sucesso.')
-    else:
-        print('Não foi possível inserir os dados.')
+        if cursor.rowcount >= 1:  # rowcount -> contagem de linhas
+            print(f'Os dados foram inseridos com sucesso.')
+    except mysql.connector.Error as e:
+        print(f'Não foi possível inserir os dados: {e}')
 
 
-# def atualizar():
-#     """"""
-#     conn = conectar()
-#     cursor = conn.cursor()
-#
-#     codigo = int(input('Escreva o código do produto: '))
-#     nome = input('Informe o novo nome do produto: ')
-#     preco = float(input('Informe o novo preço do produto: '))
-#     estoque = int(input('Informe a nova quantidade em estoque: '))
-#
-#     cursor.execute(f"UPDATE produtos SET nome='{nome}', preco={preco}, estoque={estoque} WHERE id={codigo}")
-#     conn.commit()
-#
-#     if cursor.rowcount == 1:  # rowcount -> contagem de linhas
-#         print(f'O produto {nome} foi atualizado com sucesso.')
-#     else:
-#         print('Não foi possível atualizar o produto.')
-#
-#     desconectar(conn)
-#
-#
+def atualizar(conn, nome):
+    """"""
+    txt = []
+    valores_tab = list()
+    cursor = conn.cursor()  # Necessário para acessar o banco de dados
+    titulo_tabela = pega_titulo_tabela(conn, nome)
+    _id = int(input('Escreva o ID a ser atualizado: '))
+
+    try:
+        for c in range(len(titulo_tabela) - 1):  # Menos 1 pois o id é auto incremento
+            valores_tab.append(input(f'Informe o {titulo_tabela[c + 1]}: '))
+
+        # Criando o texto que irá para o comando SQL
+        for v in range(len(valores_tab)):
+            txt.append(f"{titulo_tabela[v+1]} = '{valores_tab[v]}',")
+
+        texto = " ".join(txt)[:-1]
+
+        cursor.execute(f"""UPDATE {nome} SET
+        {texto}
+        WHERE id={_id}""")
+
+        conn.commit()
+
+        if cursor.rowcount >= 1:  # rowcount -> contagem de linhas
+            print(f'Os dados foram atualizados com sucesso.')
+    except mysql.connector.Error as e:
+        print(f'Não foi possível atualizar os dados: {e}')
+
+
 # def deletar():
 #     """"""
 #     conn = conectar()
