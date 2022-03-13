@@ -3,8 +3,16 @@ from lib.Arquivo import *
 
 conn = conexao()
 
-nome = mostra_tabelas(conn)
+while True:
 
-operacao = escolhe_acao()
+    nome = mostra_tabelas(conn)
 
-executa_acao(conn, nome, operacao)
+    operacao = escolhe_acao()
+
+    executa_acao(conn, nome, operacao)
+
+    ans = input('Deseja fazer outra operação? [S/N] ').upper().strip()[0]
+
+    if ans not in ['S']:
+        desconectar(conn)
+        break
