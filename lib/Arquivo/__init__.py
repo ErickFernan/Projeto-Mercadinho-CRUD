@@ -48,6 +48,8 @@ def executa_acao(conn, nome, operacao):
     """"""
     if operacao == '1':
         listar(conn, nome)
+    if operacao == '2':
+        inserir(conn, nome)
 
 
 def pega_titulo_tabela(conn, nome):
@@ -85,26 +87,26 @@ def listar(conn, nome):
         print('Não existem produtos cadastrados.')
 
 
-# def inserir():
-#     """"""
-#     conn = conectar()
-#     cursor = conn.cursor()
-#
-#     nome = input('Informe o nome do protudo: ')
-#     preco = float(input('Informe o preço do protudo: '))
-#     estoque = int(input('Informe o estoque do protudo: '))
-#
-#     cursor.execute(f"INSERT INTO produtos (nome, preco, estoque) VALUES ('{nome}', {preco}, {estoque})")
-#     conn.commit()
-#
-#     if cursor.rowcount == 1:  # rowcount -> contagem de linhas
-#         print(f'O produto {nome} foi inserido com sucesso.')
-#     else:
-#         print('Não foi possível inserir o produto.')
-#
-#     desconectar(conn)
-#
-#
+def inserir(conn, nome):
+    """"""
+    valores_tab = list()
+    cursor = conn.cursor()
+    titulo_tabela = pega_titulo_tabela(conn, nome)
+
+    for c in range(len(titulo_tabela)-1):  # Menos 1 pois o id é auto incremento
+        valores_tab.append(input(f'Informe o {titulo_tabela[c+1]}: '))
+
+    cursor.execute(f"INSERT INTO {nome} ({re.sub(r'[^a-zA-Z0-9,]', '', str(titulo_tabela[1:]))}) "
+                   f"VALUES ({(str(valores_tab)).replace(']','').replace('[','')})")
+
+    conn.commit()
+
+    if cursor.rowcount >= 1:  # rowcount -> contagem de linhas
+        print(f'Os dados foram inseridos com sucesso.')
+    else:
+        print('Não foi possível inserir os dados.')
+
+
 # def atualizar():
 #     """"""
 #     conn = conectar()
