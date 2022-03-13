@@ -52,6 +52,8 @@ def executa_acao(conn, nome, operacao):
         inserir(conn, nome)
     elif operacao == '3':
         atualizar(conn, nome)
+    else:
+        deletar(conn, nome)
 
 
 def pega_titulo_tabela(conn, nome):
@@ -140,19 +142,17 @@ def atualizar(conn, nome):
         print(f'Não foi possível atualizar os dados: {e}')
 
 
-# def deletar():
-#     """"""
-#     conn = conectar()
-#     cursor = conn.cursor()
-#
-#     codigo = int(input('Qual o código do produto a ser deletado? '))
-#
-#     cursor.execute(f'DELETE FROM produtos WHERE id = {codigo}')
-#     conn.commit()
-#
-#     if cursor.rowcount == 1:  # se ele conseguiu deletar um cara ele retorna 1
-#         print('Produto excluído com sucesso.')
-#     else:
-#         print(f'Erro ao excluir o produto com id = {codigo}.')
-#
-#     desconectar(conn)
+def deletar(conn, nome):
+    """"""
+    cursor = conn.cursor()  # Necessário para acessar o banco de dados
+
+    codigo = int(input('Qual o ID a ser deletado? '))
+    try:
+        cursor.execute(f'DELETE FROM {nome} WHERE id = {codigo}')
+        conn.commit()
+
+        if cursor.rowcount >= 1:  # se ele conseguiu deletar um cara ele retorna 1
+            print('Dado excluído com sucesso.')
+
+    except mysql.connector.Error as e:
+        print(f'Não foi possível excluir os dados: {e}')
