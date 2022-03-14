@@ -101,7 +101,7 @@ def inserir(conn, nome):
         for c in range(len(titulo_tabela)-1):  # Menos 1 pois o id é auto incremento
             valores_tab.append(input(f'Informe o {titulo_tabela[c+1]}: '))
 
-        cursor.execute(f"INSERT INTO {nome} ({re.sub(r'[^a-zA-Z0-9,]', '', str(titulo_tabela[1:]))}) "
+        cursor.execute(f"INSERT INTO {nome} ({re.sub(r'[^a-zA-Z0-9,_]', '', str(titulo_tabela[1:]))}) "
                        f"VALUES ({(str(valores_tab)).replace(']','').replace('[','')})")
 
         conn.commit()

@@ -10,4 +10,5 @@ while True:
 
     if ans not in ['S']:
         desconectar(conn)
+        print('Operação encerrada com sucesso!')
         break
