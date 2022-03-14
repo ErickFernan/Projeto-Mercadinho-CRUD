@@ -54,8 +54,6 @@ def executa_acao(conn, nome, operacao):
         atualizar(conn, nome)
     elif operacao == '4':
         deletar(conn, nome)
-    elif operacao == '5':
-        info_imprime_nota(conn)
 
 
 def pega_titulo_tabela(conn, nome):
