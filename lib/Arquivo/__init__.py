@@ -14,13 +14,16 @@ def conectar(login, senha):
         )
         return conn
     except mysql.connector.Error as e:
-        print(f'Erro na conexão ao MySQL Server {e}')
+        print(f'Erro na conexão ao MySQL Server: {e}')
 
 
 def desconectar(conn):
     """"""
-    if conn:
-        conn.close()
+    try:
+        if conn:
+            conn.close()
+    except mysql.connector.Error as e:
+        print(f'Erro ao desconectar: {e}')
 
 
 def mostra_tabelas(conn):
@@ -70,25 +73,28 @@ def pega_titulo_tabela(conn, nome):
 
 def listar(conn, nome):
     """"""
-    cursor = conn.cursor()  # Necessário para acessar o banco de dados
-    cursor.execute(f'SELECT * FROM {nome}')  # Executa o comando SQL
-    itens = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
+    try:
+        cursor = conn.cursor()  # Necessário para acessar o banco de dados
+        cursor.execute(f'SELECT * FROM {nome}')  # Executa o comando SQL
+        itens = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
 
-    # Verificando se a lista está vazia
-    if len(itens) > 0:
-        print('Listando produtos...')
-        titulo_tabela = pega_titulo_tabela(conn, nome)
-        print('-' * 26 * len(titulo_tabela))
-        for palavra in titulo_tabela:
-            print(f'{ palavra:^24} |', end='')
-        print('')
-        for item in itens:
-            for valor in item:
-                print(f'{str(valor):^24} |', end='')
+        # Verificando se a lista está vazia
+        if len(itens) > 0:
+            print('Listando produtos...')
+            titulo_tabela = pega_titulo_tabela(conn, nome)
+            print('-' * 26 * len(titulo_tabela))
+            for palavra in titulo_tabela:
+                print(f'{ palavra:^24} |', end='')
             print('')
-        print('-' * 26 * len(titulo_tabela))
-    else:
-        print('Não existem produtos cadastrados.')
+            for item in itens:
+                for valor in item:
+                    print(f'{str(valor):^24} |', end='')
+                print('')
+            print('-' * 26 * len(titulo_tabela))
+        else:
+            print('Não existem produtos cadastrados.')
+    except mysql.connector.Error as e:
+        print(f'Erro ao pegar as informações: {e}')
 
 
 def inserir(conn, nome):
