@@ -86,7 +86,7 @@ def listar(conn, nome):
         print('')
         for item in itens:
             for valor in item:
-                print(f'{valor:^24} |', end='')
+                print(f'{str(valor):^24} |', end='')
             print('')
         print('-' * 26 * len(titulo_tabela))
     else:
@@ -168,7 +168,10 @@ def info_imprime_nota(conn):
     dados_cli = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
 
     cursor.execute(f"SELECT data,id FROM compras WHERE id_cliente ='{_id}'")  # Executa o comando SQL
-    data = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
+    data_info = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
+    print(f"{'DATA':^20}|{'ID COMPRA':^20}")
+    for i in range(len(data_info)):
+        print(f"{str(data_info[i][0]):^20}|{data_info[i][1]:^20}")
 
     id_compra = input('Selecione o id da compra: ')
     cursor.execute(f"""SELECT p.produto, p.preco_venda , tp. produto, f.nome, lp.quantidade
@@ -177,12 +180,15 @@ WHERE p.id_fabricantes = f.id AND p.id_tipo = tp.id AND lp.id_produto = p.id AND
 AND lp.id_compras = {id_compra}""")  # Executa o comando SQL
     compras = cursor.fetchall()
 
+    cursor.execute(f"SELECT data FROM compras WHERE id = {id_compra}")
+    data = cursor.fetchall()
+
     print(f"{'-' * 77}\n{'DETALHES DA COMPRA':^77}\n{'-' * 77}")
     print(f"""
 {'NOME:':<10}{dados_cli[0][1]:<26}{'ENDEREÇO:':<10}{dados_cli[0][2]:<26}
 {'TELEFONE:':<10}{dados_cli[0][3]:<26}{'CEP:':<10}{dados_cli[0][4]:<26}
 {'CIDADE:':<10}{dados_cli[0][5]:<26}{'CPF:':<10}{dados_cli[0][6]:<26}
-{'DATA:':<10}{data[int(id_compra)][0]}
+{'DATA:':<10}{data[0][0]}
 {'-'*77}
 {'PEDIDOS':^77}
 {'-'*77}
