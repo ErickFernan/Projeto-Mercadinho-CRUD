@@ -55,7 +55,7 @@ def executa_acao(conn, nome, operacao):
     elif operacao == '4':
         deletar(conn, nome)
     elif operacao == '5':
-        detalhes_compra()
+        info_imprime_nota(conn)
 
 
 def pega_titulo_tabela(conn, nome):
@@ -166,18 +166,27 @@ def info_imprime_nota(conn):
     cursor = conn.cursor()  # Necessário para acessar o banco de dados
     cursor.execute(f'SELECT * FROM clientes WHERE id = {_id}')  # Executa o comando SQL
     dados_cli = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
-    print(dados_cli)
 
     cursor.execute(f"SELECT data,id FROM compras WHERE id_cliente ='{_id}'")  # Executa o comando SQL
     data = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
-    print(data)
-    id_compra = input('Selecione o id da compra: ')
 
+    id_compra = input('Selecione o id da compra: ')
     cursor.execute(f"""SELECT p.produto, p.preco_venda , tp. produto, f.nome, lp.quantidade
 FROM produtos AS p, tiposproduto AS tp, fabricantes AS f, listaprodutos AS lp, compras as com
 WHERE p.id_fabricantes = f.id AND p.id_tipo = tp.id AND lp.id_produto = p.id AND com.id = lp.id_compras 
 AND lp.id_compras = {id_compra}""")  # Executa o comando SQL
     compras = cursor.fetchall()
-    print(compras)
 
-    return dados_cli, id_compra, compras
+    print(f"{'-' * 77}\n{'DETALHES DA COMPRA':^77}\n{'-' * 77}")
+    print(f"""
+{'NOME:':<10}{dados_cli[0][1]:<26}{'ENDEREÇO:':<10}{dados_cli[0][2]:<26}
+{'TELEFONE:':<10}{dados_cli[0][3]:<26}{'CEP:':<10}{dados_cli[0][4]:<26}
+{'CIDADE:':<10}{dados_cli[0][5]:<26}{'CPF:':<10}{dados_cli[0][6]:<26}
+{'DATA:':<10}{data[int(id_compra)][0]}
+{'-'*77}
+{'PEDIDOS':^77}
+{'-'*77}
+{'PRODUTO':^15}|{'PREÇO':^15}|{'TIPO':^15}|{'FABRICANTE':^15}|{'QUANTIDADE':^15}""")
+    for item in compras:
+        print(f"{item[0]:^15}|{item[1]:^15}|{item[2]:^15}|{item[3]:^15}|{item[4]:^15}")
+    print('')

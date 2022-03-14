@@ -1,15 +1,6 @@
 from lib.Arquivo import *
 
 
-def detalhes_compra():
-    """"""
-    print('cheguei aqui DC')
-    # dados_cli, id_compra, compras = info_imprime_nota(conn)
-    # print(dados_cli)
-    # print(id_compra)
-    # print(compras)
-
-
 def conexao():
     """"""
     while True:
