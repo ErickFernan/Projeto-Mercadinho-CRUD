@@ -52,8 +52,10 @@ def executa_acao(conn, nome, operacao):
         inserir(conn, nome)
     elif operacao == '3':
         atualizar(conn, nome)
-    else:
+    elif operacao == '4':
         deletar(conn, nome)
+    elif operacao == '5':
+        detalhes_compra()
 
 
 def pega_titulo_tabela(conn, nome):
@@ -156,3 +158,26 @@ def deletar(conn, nome):
 
     except mysql.connector.Error as e:
         print(f'Não foi possível excluir os dados: {e}')
+
+
+def info_imprime_nota(conn):
+    """"""
+    _id = input('Digite o id do cliente: ')
+    cursor = conn.cursor()  # Necessário para acessar o banco de dados
+    cursor.execute(f'SELECT * FROM clientes WHERE id = {_id}')  # Executa o comando SQL
+    dados_cli = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
+    print(dados_cli)
+
+    cursor.execute(f"SELECT data,id FROM compras WHERE id_cliente ='{_id}'")  # Executa o comando SQL
+    data = cursor.fetchall()  # Pega o resultado da linha anterior e transforma em uma lista
+    print(data)
+    id_compra = input('Selecione o id da compra: ')
+
+    cursor.execute(f"""SELECT p.produto, p.preco_venda , tp. produto, f.nome, lp.quantidade
+FROM produtos AS p, tiposproduto AS tp, fabricantes AS f, listaprodutos AS lp, compras as com
+WHERE p.id_fabricantes = f.id AND p.id_tipo = tp.id AND lp.id_produto = p.id AND com.id = lp.id_compras 
+AND lp.id_compras = {id_compra}""")  # Executa o comando SQL
+    compras = cursor.fetchall()
+    print(compras)
+
+    return dados_cli, id_compra, compras
