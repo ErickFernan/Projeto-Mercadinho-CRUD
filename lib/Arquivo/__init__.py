@@ -120,6 +120,7 @@ def inserir(conn, nome):
 
 def atualizar(conn, nome):
     """"""
+
     txt = []
     valores_tab = list()
     cursor = conn.cursor()  # Necessário para acessar o banco de dados
