@@ -4,7 +4,7 @@ Este projeto tem por objetivo permitir a comunicação de um banco dados MySQL c
 
 <p align="justify"> 
  
-Para acessar o vídeo demonstrativo do projeto [CLIQUE AQUI](https://www.google.com/).
+Para acessar o vídeo demonstrativo do projeto [CLIQUE AQUI](https://drive.google.com/drive/u/1/folders/1jNBcDQStzFz5haRzG4oiOJt6TK6Nped4).
 
 </p>
  
