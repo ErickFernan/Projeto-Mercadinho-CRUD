@@ -26,4 +26,8 @@ Para acessar o vídeo demonstrativo do projeto [CLIQUE AQUI](https://drive.googl
  Por se tratar de um projeto de estudo o mesmo será utilizado para estudar Django. Desta forma, o foco principal será transformar esse projeto pré-eliminar em uma aplicação Web.
 </p>
 
+<p align="justify"> 
+Descobri sobre a existência de um ORM (Object-relational mapping) chamado "Peewee"nque facilita e encapsula os comandos SQL, dessa forma torna-se possível implementar o banco de dados via python e não por SQL, o que protege e facilita o desenvolvimento do CRUD. Irei utiliza-los nos próximos programas.
+</p>
+
 Opiniões, dúvidas ou dicas? Fique a vontade para entrar em contato.
