@@ -27,7 +27,7 @@ Para acessar o vídeo demonstrativo do projeto [CLIQUE AQUI](https://drive.googl
 </p>
 
 <p align="justify"> 
-Descobri sobre a existência de um ORM (Object-relational mapping) chamado "Peewee" que facilita e encapsula os comandos SQL, dessa forma torna-se possível implementar o banco de dados via python e não por SQL, o que protege e facilita o desenvolvimento do CRUD. Irei utiliza-los nos próximos programas.
+Descobri sobre a existência de um ORM (Object-relational mapping) chamado "Peewee" que facilita e encapsula os comandos SQL, dessa forma torna-se possível implementar o banco de dados via python e não por SQL, o que protege e facilita o desenvolvimento do CRUD. Irei utiliza-los nos próximos programas. Ps.: o Django possui seu próprio ORM então não se faz necessário lançar mão de outro.
 </p>
 
 Opiniões, dúvidas ou dicas? Fique a vontade para entrar em contato.
